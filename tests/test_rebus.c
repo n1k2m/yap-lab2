@@ -1,7 +1,3 @@
-/* Тесты для rebus_solve.
-   Ответ не сравнивается с эталоном (решений может быть несколько),
-   а проверяется независимым валидатором. */
-
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -31,8 +27,18 @@ static const test_case tests[] = {
     {"SEND + MORE = MONEY\n",                OUT_SIZE, REBUS_OK},
     {"MONEY - MORE = SEND",                  OUT_SIZE, REBUS_OK},
 
+    /* умножение и деление */
+    {"AB * C = DE",                          OUT_SIZE, REBUS_OK},
+    {"TWO * TWO = SQUARE",                   OUT_SIZE, REBUS_OK},
+    {"A * BC = A",                           OUT_SIZE, REBUS_OK},
+    {"ABC / DE = F",                         OUT_SIZE, REBUS_OK},
+    {"SQUARE / TWO = TWO",                   OUT_SIZE, REBUS_OK},
+    {"AB / C = D",                           OUT_SIZE, REBUS_OK},
+
     /* ошибки */
     {"AB + AB = A",                          OUT_SIZE, REBUS_ERR_NO_SOLUTION},
+    {"AB * AB = A",                          OUT_SIZE, REBUS_ERR_NO_SOLUTION},
+    {"A * B + C = D",                        OUT_SIZE, REBUS_ERR_PARSE},
     {"",                                     OUT_SIZE, REBUS_ERR_PARSE},
     {"send + more = money",                  OUT_SIZE, REBUS_ERR_PARSE},
     {"ABC + DEF = GHIJK",                    OUT_SIZE, REBUS_ERR_PARSE},
